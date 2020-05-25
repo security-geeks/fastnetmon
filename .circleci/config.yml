@@ -11,13 +11,188 @@ jobs:
           name: install_required_packages
           no_output_timeout: 20m
           command: perl src/fastnetmon_install.pl --install_dependency_packages_only
+      - restore_cache:
+          keys:
+            - ubuntu2004_dependencies_25_05_2020
       - run:
           name: install_dependencies
           no_output_timeout: 20m
           command: perl src/fastnetmon_install.pl --use-git-master
+      - save_cache:
+          key: ubuntu2004_dependencies_25_05_2020
+          paths:
+            - /opt
+      - run: cd src; mkdir -p build; cd build; cmake ..; make 
+  ubuntu1804:
+    docker:
+      - image: ubuntu:bionic-20200403
+    steps:
+      - checkout
+      - run: apt-get update; true
+      - run: apt-get install -y perl wget
+      - run:
+          name: install_required_packages
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --install_dependency_packages_only
+      - restore_cache:
+          keys:
+            - ubuntu1804_dependencies_25_05_2020
+      - run:
+          name: install_dependencies
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --use-git-master
+      - save_cache:
+          key: ubuntu1804_dependencies_25_05_2020
+          paths:
+            - /opt
+      - run: cd src; mkdir -p build; cd build; cmake ..; make
+  ubuntu1604:
+    docker:
+      - image: ubuntu:xenial-20200326
+    steps:
+      - checkout
+      - run: apt-get update; true
+      - run: apt-get install -y perl wget
+      - run:
+          name: install_required_packages
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --install_dependency_packages_only
+      - restore_cache:
+          keys:
+            - ubuntu1604_dependencies_25_05_2020
+      - run:
+          name: install_dependencies
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --use-git-master
+      - save_cache:
+          key: ubuntu1604_dependencies_25_05_2020
+          paths:
+            - /opt
+      - run: cd src; mkdir -p build; cd build; cmake ..; make
+  debian9:
+    docker:
+      - image: debian:stretch-20200514
+    steps:
+      - checkout
+      - run: apt-get update; true
+      - run: apt-get install -y perl wget
+      - run:
+          name: install_required_packages
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --install_dependency_packages_only
+      - restore_cache:
+          keys:
+            - debian9_dependencies_25_05_2020
+      - run:
+          name: install_dependencies
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --use-git-master
+      - save_cache:
+          key: debian9_dependencies_25_05_2020
+          paths:
+            - /opt
+      - run: cd src; mkdir -p build; cd build; cmake ..; make
+  debian10:
+    docker:
+      - image: debian:buster-20200514
+    steps:
+      - checkout
+      - run: apt-get update; true
+      - run: apt-get install -y perl wget
+      - run:
+          name: install_required_packages
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --install_dependency_packages_only
+      - restore_cache:
+          keys:
+            - debian10_dependencies_25_05_2020
+      - run:
+          name: install_dependencies
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --use-git-master
+      - save_cache:
+          key: debian10_dependencies_25_05_2020
+          paths:
+            - /opt
+      - run: cd src; mkdir -p build; cd build; cmake ..; make
+  centos6:
+    docker:
+      - image: centos:centos6.9
+    steps:
+      - checkout
+      - run: apt-get update; true
+      - run: apt-get install -y perl wget
+      - run:
+          name: install_required_packages
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --install_dependency_packages_only
+      - restore_cache:
+          keys:
+            - centos6_dependencies_25_05_2020
+      - run:
+          name: install_dependencies
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --use-git-master
+      - save_cache:
+          key: centos6_dependencies_25_05_2020
+          paths:
+            - /opt
+      - run: cd src; mkdir -p build; cd build; cmake ..; make
+  centos7:
+    docker:
+      - image: centos:centos7.8.2003
+    steps:
+      - checkout
+      - run: apt-get update; true
+      - run: apt-get install -y perl wget
+      - run:
+          name: install_required_packages
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --install_dependency_packages_only
+      - restore_cache:
+          keys:
+            - centos7_dependencies_25_05_2020
+      - run:
+          name: install_dependencies
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --use-git-master
+      - save_cache:
+          key: centos7_dependencies_25_05_2020
+          paths:
+            - /opt
+      - run: cd src; mkdir -p build; cd build; cmake ..; make
+   centos8:
+    docker:
+      - image: centos:centos8.1.1911
+    steps:
+      - checkout
+      - run: apt-get update; true
+      - run: apt-get install -y perl wget
+      - run:
+          name: install_required_packages
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --install_dependency_packages_only
+      - restore_cache:
+          keys:
+            - centos8_dependencies_25_05_2020
+      - run:
+          name: install_dependencies
+          no_output_timeout: 20m
+          command: perl src/fastnetmon_install.pl --use-git-master
+      - save_cache:
+          key: centos8_dependencies_25_05_2020
+          paths:
+            - /opt
       - run: cd src; mkdir -p build; cd build; cmake ..; make
 workflows:
   version: 2
   all_distros:
     jobs:
+      - debian9
+      - debian10
+      - ubuntu1604
+      - ubuntu1804
       - ubuntu2004
+      - centos6
+      - centos7
+      - centos8
